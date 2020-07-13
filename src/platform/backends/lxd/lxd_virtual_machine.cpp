@@ -27,6 +27,7 @@
 #include <multipass/logging/log.h>
 #include <multipass/network_access_manager.h>
 #include <multipass/optional.h>
+#include <multipass/snap_utils.h>
 #include <multipass/utils.h>
 #include <multipass/virtual_machine_description.h>
 #include <multipass/vm_status_monitor.h>
@@ -179,7 +180,7 @@ mp::LXDVirtualMachine::~LXDVirtualMachine()
 {
     update_shutdown_status = false;
 
-    if (state == State::running)
+    if (state == State::running && !QFileInfo::exists(mp::utils::snap_common_dir() + "/snap_refresh"))
         stop();
 }
 
